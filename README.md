@@ -6,8 +6,8 @@
 
 Put API keys in a .env file in the root folder and name them as such
 
-- Giphy API key: REACT_APP_GIPHY_APIKEY="<insert API key>"
-- Google Client ID: REACT_APP_GOOGLE_CLIENTID="<insert Google ClientID>"
+- Giphy API key: REACT_APP_GIPHY_APIKEY="insert API key here"
+- Google Client ID: REACT_APP_GOOGLE_CLIENTID="insert Google ClientID here"
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

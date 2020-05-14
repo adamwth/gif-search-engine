@@ -13,6 +13,7 @@ import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import LogoutButton from "./components/Login/LogoutButton";
 import auth from "./components/Auth";
+import { connect } from "react-redux";
 
 const App = (props) => {
   const handleLoginSuccess = (googleUser) => {
@@ -28,9 +29,7 @@ const App = (props) => {
 
   const handleLogout = () => {
     const history = props.history;
-    auth.logout(() => {
-      props.history.push("/");
-    });
+    props.history.push("/");
     console.log(history);
   };
 
@@ -55,6 +54,10 @@ const App = (props) => {
       <BottomNavBar />
     </>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {};
 };
 
 export default withRouter(App);

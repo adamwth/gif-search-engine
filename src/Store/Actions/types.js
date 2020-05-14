@@ -1,0 +1,5 @@
+export default {
+  ADD_SEARCH_RESULTS: "ADD_SEARCH_RESULTS",
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+};

@@ -1,5 +1,8 @@
 import React from "react";
 import auth from "../Auth";
+import { connect } from "react-redux";
+import { login } from "../../Store/Actions";
+import { withRouter, Redirect } from "react-router-dom";
 
 const GOOGLE_BUTTON_ID = "google-login";
 
@@ -9,7 +12,24 @@ class LoginButton extends React.Component {
       func();
       this.props.onSuccess(res);
     };
-    auth.setupLogin(onSuccess, GOOGLE_BUTTON_ID);
+    window.gapi.load("auth2", () => {
+      window.gapi.auth2
+        .init({
+          client_id: `${process.env.REACT_APP_GOOGLE_CLIENTID}`,
+        })
+        .then(() => {
+          func();
+          window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
+            scope: "profile email",
+            width: 250,
+            height: 50,
+            longtitle: false,
+            theme: "dark",
+            onsuccess: this.props.login,
+            onfailure: this.props.onFailure,
+          });
+        });
+    });
   }
   componentDidMount() {
     // Set interval because window.gapi sometimes doesn't load before component mounts
@@ -23,8 +43,26 @@ class LoginButton extends React.Component {
   }
 
   render() {
+    // TODO: Move redirect to LoginPage
+    const { isSignedIn, user, history } = this.props;
+    if (isSignedIn) {
+      console.log(user);
+      return <Redirect to="/search" />;
+    }
     return <div id={GOOGLE_BUTTON_ID} />;
   }
 }
 
-export default LoginButton;
+const mapStateToProps = (state) => {
+  return state.auth;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (loginUser) => dispatch(login(loginUser)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(LoginButton)
+);
