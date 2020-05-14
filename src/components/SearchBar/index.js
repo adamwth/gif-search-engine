@@ -1,7 +1,7 @@
 import React from "react";
 
-const Search = (props) => {
+const SearchBar = (props) => {
   return <input onChange={props.onChange}></input>;
 };
 
-export default Search;
+export default SearchBar;

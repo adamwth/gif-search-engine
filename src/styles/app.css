@@ -1,14 +1,14 @@
-.app {
+.search-engine {
   margin: 3em auto;
   width: 90%;
 }
 
 .item {
-  box-shadow: 2px 2px 4px 0 #ccc;
+  /* box-shadow: 2px 2px 4px 0 #ccc; */
   box-sizing: border-box;
   display: inline-block;
-  margin: 0 0 1.5em;
-  padding: 1em;
+  margin: 0 0 0em;
+  padding: 0em;
   width: 100%;
 }
 
@@ -17,10 +17,11 @@
 }
 
 .list {
-  column-gap: 1.5em;
+  column-gap: 0.5em;
   font-size: 0.85em;
   margin: 1.5em 0;
   padding: 0;
+  width: 100%;
 }
 
 input {

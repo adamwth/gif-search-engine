@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/app.css";
+import { makeStyles } from "@material-ui/core/styles";
 
 const Item = (props) => {
   return (

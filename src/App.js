@@ -1,43 +1,60 @@
 import React from "react";
-import Search from "./components/Search";
-import List from "./components/List";
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch,
+  withRouter,
+} from "react-router-dom";
+import LoginPage from "./components/LoginPage";
+import SearchPage from "./components/SearchPage";
+import Home from "./components/Home";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import FavoritesPage from "./components/FavoritesPage";
+import BottomNavBar from "./components/BottomNavBar";
+import LogoutButton from "./components/LogoutButton";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gifs: [],
-    };
-  }
-
-  handleSearchChange = (event) => {
-    this.getSearchResults(event.target.value);
+const App = (props) => {
+  const onSuccess = (googleUser) => {
+    const profile = googleUser.getBasicProfile();
+    console.log(`Name:${profile.getName()}`);
+    console.log(`ID: ${profile.getId()}`);
+    props.history.push("/search");
   };
 
-  getSearchResults(term) {
-    const maxResults = 10;
+  const onFailure = () => {
+    this.setState({ isSignedIn: false });
+    console.log("failed to sign in");
+  };
 
-    const apiKey = `?api_key=${process.env.REACT_APP_GIPHY_APIKEY}`;
-    const searchTerm = `&q=${term.replace(/\s/g, "+")}`;
-    const limit = `&limit=${maxResults}`;
+  const handleLogout = () => {
+    const history = this.props.history;
+    console.log(history);
+  };
 
-    const url = `http://api.giphy.com/v1/gifs/search${apiKey}${searchTerm}${limit}`;
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({ gifs: data.data });
-      });
-  }
+  return (
+    <div>
+      <>
+        <LogoutButton onClick={handleLogout} />
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={(props) => (
+              <LoginPage
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                {...props}
+              />
+            )}
+          />
+          <Route exact path="/search" component={SearchPage} />
+          <Route exact path="/favorites" component={FavoritesPage} />
+        </Switch>
+      </>
+      <BottomNavBar />
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className="App">
-        <Search onChange={this.handleSearchChange} />
-        <List gifs={this.state.gifs} />
-      </div>
-    );
-  }
-}
-
-export default App;
+export default withRouter(App);
