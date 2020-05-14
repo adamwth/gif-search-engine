@@ -13,47 +13,48 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import FavoritesPage from "./components/FavoritesPage";
 import BottomNavBar from "./components/BottomNavBar";
 import LogoutButton from "./components/LogoutButton";
+import auth from "./components/Auth";
 
 const App = (props) => {
-  const onSuccess = (googleUser) => {
+  const handleLoginSuccess = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     console.log(`Name:${profile.getName()}`);
     console.log(`ID: ${profile.getId()}`);
     props.history.push("/search");
   };
 
-  const onFailure = () => {
-    this.setState({ isSignedIn: false });
+  const handleLoginFailure = () => {
     console.log("failed to sign in");
   };
 
   const handleLogout = () => {
-    const history = this.props.history;
+    const history = props.history;
+    auth.logout(() => {
+      props.history.push("/");
+    });
     console.log(history);
   };
 
   return (
-    <div>
-      <>
-        <LogoutButton onClick={handleLogout} />
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={(props) => (
-              <LoginPage
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                {...props}
-              />
-            )}
-          />
-          <Route exact path="/search" component={SearchPage} />
-          <Route exact path="/favorites" component={FavoritesPage} />
-        </Switch>
-      </>
+    <>
+      <LogoutButton onClick={handleLogout} />
+      <Switch>
+        <Route
+          path="/"
+          exact
+          render={(props) => (
+            <LoginPage
+              onSuccess={handleLoginSuccess}
+              onFailure={handleLoginFailure}
+              {...props}
+            />
+          )}
+        />
+        <Route exact path="/search" component={SearchPage} />
+        <Route exact path="/favorites" component={FavoritesPage} />
+      </Switch>
       <BottomNavBar />
-    </div>
+    </>
   );
 };
 

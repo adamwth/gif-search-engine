@@ -1,10 +1,10 @@
 import React from "react";
-import Login from "../Login";
+import LoginButton from "../LoginButton";
 
 const LoginPage = (props) => {
   return (
-    <div>
-      <Login onSuccess={props.onSuccess} />
+    <div className="login">
+      <LoginButton onSuccess={props.onSuccess} />
     </div>
   );
 };
