@@ -1,3 +1,14 @@
+# packages to install
+
+`npm install react-router-dom redux react-redux @material/ui-core`
+
+# where to put API keys
+
+Put API keys in a .env file in the root folder and name them as such
+
+- Giphy API key: REACT_APP_GIPHY_APIKEY="<insert API key>"
+- Google Client ID: REACT_APP_GOOGLE_CLIENTID="<insert Google ClientID>"
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
