@@ -6,13 +6,12 @@ import {
   Switch,
   withRouter,
 } from "react-router-dom";
-import LoginPage from "./components/LoginPage";
-import SearchPage from "./components/SearchPage";
-import Home from "./components/Home";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import FavoritesPage from "./components/FavoritesPage";
-import BottomNavBar from "./components/BottomNavBar";
-import LogoutButton from "./components/LogoutButton";
+import LoginPage from "./components/Login/LoginPage";
+import SearchPage from "./components/Search/SearchPage";
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
+import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
+import LogoutButton from "./components/Login/LogoutButton";
 import auth from "./components/Auth";
 
 const App = (props) => {

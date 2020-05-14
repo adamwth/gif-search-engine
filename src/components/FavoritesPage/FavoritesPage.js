@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import List from "../List";
-import BottomNavBar from "../BottomNavBar";
+import List from "../Search/List";
 
 class FavoritesPage extends React.Component {
   render = (props) => {
