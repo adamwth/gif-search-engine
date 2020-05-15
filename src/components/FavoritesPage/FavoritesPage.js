@@ -12,6 +12,7 @@ class FavoritesPage extends React.Component {
   }
 
   componentDidMount() {
+    console.log("favorites page");
     //TODO: refactor this into helper method or use redux state, because overlapping with gifcard local storage access
     const { user } = this.props;
     const userId = user.getEmail();

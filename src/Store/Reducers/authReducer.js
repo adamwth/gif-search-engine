@@ -16,7 +16,7 @@ const authReducer = (state = initState, action) => {
       };
     }
     case types.LOGOUT: {
-      return { ...state, isSignedIn: false };
+      return { ...state, ...initState };
     }
     default: {
       return state;

@@ -1,25 +1,17 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Link,
-  Route,
-  Switch,
-  withRouter,
-} from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import LoginPage from "./components/Login/LoginPage";
 import SearchPage from "./components/Search/SearchPage";
-import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import LogoutButton from "./components/Login/LogoutButton";
-import auth from "./components/Auth";
 import { connect } from "react-redux";
 
 const App = (props) => {
   const handleLoginSuccess = (googleUser) => {
-    const profile = googleUser.getBasicProfile();
-    console.log(`Name:${profile.getName()}`);
-    props.history.push("/search");
+    // const profile = googleUser.getBasicProfile();
+    // console.log(`Name:${profile.getName()}`);
   };
 
   const handleLoginFailure = () => {
@@ -27,9 +19,7 @@ const App = (props) => {
   };
 
   const handleLogout = () => {
-    const history = props.history;
-    props.history.push("/");
-    console.log(history);
+    console.log(props.user);
   };
 
   return (
@@ -47,8 +37,18 @@ const App = (props) => {
             />
           )}
         />
-        <Route exact path="/search" component={SearchPage} />
-        <Route exact path="/favorites" component={FavoritesPage} />
+        <ProtectedRoute
+          exact
+          path="/search"
+          component={SearchPage}
+          isAuthenticated={props.isSignedIn}
+        />
+        <ProtectedRoute
+          exact
+          path="/favorites"
+          component={FavoritesPage}
+          isAuthenticated={props.isSignedIn}
+        />
       </Switch>
       <BottomNavBar />
     </>
@@ -56,7 +56,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return {};
+  return state.auth;
 };
 
-export default withRouter(App);
+export default connect(mapStateToProps, null)(App);
