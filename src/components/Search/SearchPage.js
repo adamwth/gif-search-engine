@@ -27,7 +27,16 @@ class SearchPage extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        this.setState({ gifs: data.data });
+        const gifs = data.data.map((gif) => {
+          const { title, images, source, import_datetime } = gif;
+          return {
+            title: title,
+            url: images.downsized.url,
+            source: source,
+            date: import_datetime,
+          };
+        });
+        this.setState({ gifs: gifs });
       });
   }
 

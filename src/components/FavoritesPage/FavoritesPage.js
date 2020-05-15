@@ -13,9 +13,11 @@ class FavoritesPage extends React.Component {
 
   componentDidMount() {
     const { user } = this.props;
-    const userId = JSON.stringify(user.getId());
+    const userId = user.getEmail();
     const stored = localStorage.getItem(userId);
-    const favoriteGifs = stored ? JSON.stringify(stored) : [];
+    console.log(`stored: ${stored}`);
+    var favoriteGifs = stored ? JSON.parse(stored) : [];
+    console.log(favoriteGifs);
     this.setState({
       gifs: favoriteGifs,
     });

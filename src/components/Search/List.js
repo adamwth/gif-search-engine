@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const List = (props) => {
-  const gifs = props.gifs.map((gif) => {
-    return <Item key={gif.id} gif={gif} />;
+  const gifs = props.gifs.map((gif, index) => {
+    return <Item key={gif.id} gif={gif} key={index} />;
   });
   return <div className="list">{gifs}</div>;
 };

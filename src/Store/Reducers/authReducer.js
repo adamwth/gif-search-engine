@@ -9,7 +9,11 @@ const authReducer = (state = initState, action) => {
   switch (action.type) {
     case types.LOGIN: {
       console.log("signed in!");
-      return { ...state, isSignedIn: true, user: action.user };
+      return {
+        ...state,
+        isSignedIn: true,
+        user: action.user.getBasicProfile(),
+      };
     }
     case types.LOGOUT: {
       return { ...state, isSignedIn: false };
