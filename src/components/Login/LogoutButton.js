@@ -44,7 +44,6 @@ const LogoutButton = (props) => {
 
   // Return null if page is at login
   const { pathname } = props.location;
-  console.log(pathname);
   if (pathname === "/") {
     return null;
   }

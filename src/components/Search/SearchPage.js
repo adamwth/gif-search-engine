@@ -8,21 +8,33 @@ class SearchPage extends React.Component {
     super(props);
     this.state = {
       gifs: [],
+      apiKey: process.env.REACT_APP_GIPHY_APIKEY,
+      limit: 20,
     };
   }
 
-  handleSearchChange = (event) => {
-    this.getSearchResults(event.target.value);
+  componentDidMount = () => {
+    this.callApi(this.getTrendingUrl());
   };
 
-  getSearchResults(term) {
-    const maxResults = 20;
+  handleSearchChange = (event) => {
+    this.callApi(this.getSearchUrl(event.target.value));
+  };
 
-    const apiKey = `?api_key=${process.env.REACT_APP_GIPHY_APIKEY}`;
+  getTrendingUrl() {
+    const apiKey = `?api_key=${this.state.apiKey}`;
+    const limit = `&limit=${this.state.limit}`;
+    return `http://api.giphy.com/v1/gifs/trending${apiKey}${limit}`;
+  }
+
+  getSearchUrl(term) {
+    const apiKey = `?api_key=${this.state.apiKey}`;
     const searchTerm = `&q=${term.replace(/\s/g, "+")}`;
-    const limit = `&limit=${maxResults}`;
+    const limit = `&limit=${this.state.limit}`;
+    return `http://api.giphy.com/v1/gifs/search${apiKey}${searchTerm}${limit}`;
+  }
 
-    const url = `http://api.giphy.com/v1/gifs/search${apiKey}${searchTerm}${limit}`;
+  callApi(url) {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -37,13 +49,9 @@ class SearchPage extends React.Component {
           };
         });
         this.setState({ gifs: gifs });
-      });
+      })
+      .catch((e) => console.log(e));
   }
-
-  handleLogout = () => {
-    const history = this.props.history;
-    console.log(history);
-  };
 
   render() {
     return (
