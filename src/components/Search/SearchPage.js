@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import List from "./List";
+import List from "../Gallery/List";
 
 class SearchPage extends React.Component {
   constructor(props) {

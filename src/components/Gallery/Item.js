@@ -1,5 +1,5 @@
 import React from "react";
-import TransitionsModal from "../Gallery/Modal";
+import TransitionsModal from "./Modal";
 
 const Item = (props) => {
   const [open, setOpen] = React.useState(false);

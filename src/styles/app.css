@@ -3,6 +3,10 @@
   width: 90%;
 }
 
+.dummy {
+  margin: 5em auto;
+}
+
 /* TO FIX - height should be 100% */
 .login {
   display: flex;

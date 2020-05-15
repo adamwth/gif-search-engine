@@ -19,7 +19,6 @@ const App = (props) => {
   const handleLoginSuccess = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     console.log(`Name:${profile.getName()}`);
-    console.log(`ID: ${profile.getId()}`);
     props.history.push("/search");
   };
 

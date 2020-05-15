@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import List from "../Search/List";
+import List from "../Gallery/List";
 import { connect } from "react-redux";
 
 class FavoritesPage extends React.Component {
@@ -12,21 +12,23 @@ class FavoritesPage extends React.Component {
   }
 
   componentDidMount() {
+    //TODO: refactor this into helper method or use redux state, because overlapping with gifcard local storage access
     const { user } = this.props;
     const userId = user.getEmail();
     const stored = localStorage.getItem(userId);
-    console.log(`stored: ${stored}`);
-    var favoriteGifs = stored ? JSON.parse(stored) : [];
-    console.log(favoriteGifs);
+
+    const favoriteGifsInitState = {};
+    var favoriteGifs = stored ? JSON.parse(stored) : favoriteGifsInitState;
     this.setState({
-      gifs: favoriteGifs,
+      gifs: Object.values(favoriteGifs),
     });
+    console.log(this.state.gifs);
   }
 
   render = (props) => {
     return (
       <div className="favorites-page">
-        Favorites
+        <div className="dummy"></div>
         <List gifs={this.state.gifs} />
       </div>
     );

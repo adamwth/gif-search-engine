@@ -37,12 +37,6 @@ const TransitionsModal = (props) => {
       >
         <Fade in={props.open}>
           <GifCard className={classes.paper} gif={props.gif} />
-          {/* <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">
-              react-transition-group animates me.
-            </p>
-          </div> */}
         </Fade>
       </Modal>
     </div>
