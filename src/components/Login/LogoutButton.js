@@ -41,6 +41,14 @@ const useStyles = makeStyles((theme) => ({
 // TODO: Prevent auto-authorization of previous user - may need to revoke previous user token?
 const LogoutButton = (props) => {
   const classes = useStyles();
+
+  // Return null if page is at login
+  const { pathname } = props.location;
+  console.log(pathname);
+  if (pathname === "/") {
+    return null;
+  }
+
   const onClick = () => {
     window.gapi.load("auth2", () => {
       console.log("loaded gapi");
@@ -54,6 +62,7 @@ const LogoutButton = (props) => {
       });
     });
   };
+
   return (
     <>
       <CssBaseline />

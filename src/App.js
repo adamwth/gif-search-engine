@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import LoginPage from "./components/Login/LoginPage";
 import SearchPage from "./components/Search/SearchPage";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
+import FavoritesPage from "./components/Favorites/FavoritesPage";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import LogoutButton from "./components/Login/LogoutButton";
 import { connect } from "react-redux";
@@ -12,14 +12,15 @@ const App = (props) => {
   const handleLoginSuccess = (googleUser) => {
     // const profile = googleUser.getBasicProfile();
     // console.log(`Name:${profile.getName()}`);
+    console.log("Login success");
   };
 
   const handleLoginFailure = () => {
-    console.log("failed to sign in");
+    console.log("Login failure");
   };
 
   const handleLogout = () => {
-    console.log(props.user);
+    console.log("Logged out");
   };
 
   return (

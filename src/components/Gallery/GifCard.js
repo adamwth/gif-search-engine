@@ -9,9 +9,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import ShareIcon from "@material-ui/icons/Share";
 
 import { connect } from "react-redux";
+import ShareButton from "./ShareButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,9 +121,7 @@ const GifCard = (props) => {
       </CardContent>
       <CardActions disableSpacing>
         {favoriteIcon()}
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <ShareButton url={url} />
       </CardActions>
     </Card>
   );

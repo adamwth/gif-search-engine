@@ -18,6 +18,12 @@ const BottomNavBar = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  // Return null if page is at login
+  const { pathname } = props.location;
+  if (pathname === "/") {
+    return null;
+  }
+
   return (
     <BottomNavigation
       value={value}
