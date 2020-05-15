@@ -24,14 +24,14 @@ class SearchPage extends React.Component {
   getTrendingUrl() {
     const apiKey = `?api_key=${this.state.apiKey}`;
     const limit = `&limit=${this.state.limit}`;
-    return `http://api.giphy.com/v1/gifs/trending${apiKey}${limit}`;
+    return `https://api.giphy.com/v1/gifs/trending${apiKey}${limit}`;
   }
 
   getSearchUrl(term) {
     const apiKey = `?api_key=${this.state.apiKey}`;
     const searchTerm = `&q=${term.replace(/\s/g, "+")}`;
     const limit = `&limit=${this.state.limit}`;
-    return `http://api.giphy.com/v1/gifs/search${apiKey}${searchTerm}${limit}`;
+    return `https://api.giphy.com/v1/gifs/search${apiKey}${searchTerm}${limit}`;
   }
 
   callApi(url) {
