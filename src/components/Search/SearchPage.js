@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import List from "../Gallery/List";
+import { debounce } from "@material-ui/core";
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class SearchPage extends React.Component {
       apiKey: process.env.REACT_APP_GIPHY_APIKEY,
       limit: 20,
     };
+    this.callApi = debounce(this.callApi, 150);
   }
 
   componentDidMount = () => {
