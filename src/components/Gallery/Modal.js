@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TransitionsModal = (props) => {
+  const { open, handleClose, data } = props;
   const classes = useStyles();
   return (
     <div>
@@ -27,16 +28,16 @@ const TransitionsModal = (props) => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={props.open}
-        onClose={props.handleClose}
+        open={open}
+        onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
       >
-        <Fade in={props.open}>
-          <GifCard className={classes.paper} gif={props.gif} />
+        <Fade in={open}>
+          <GifCard className={classes.paper} data={data} />
         </Fade>
       </Modal>
     </div>

@@ -19,12 +19,14 @@ class Item extends React.Component {
   };
 
   render() {
-    const { gif, imgData, forwardedRef, margin } = this.props;
+    const { image, forwardedRef, margin } = this.props;
+    const { height, width, url, ...metadata } = image;
     const divStyle = {
-      height: imgData.height,
-      width: imgData.width,
+      height: height,
+      width: width,
       margin: margin,
     };
+    const imgData = { height, width, src: url };
     return (
       <>
         <div ref={forwardedRef} style={divStyle}>
@@ -33,7 +35,7 @@ class Item extends React.Component {
         <TransitionsModal
           open={this.state.open}
           handleClose={this.handleClose}
-          gif={gif}
+          data={metadata}
         />
       </>
     );

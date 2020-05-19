@@ -76,19 +76,20 @@ const SearchPage = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        const gifResults = data.data.map((gif) => {
-          const { title, images, source, import_datetime } = gif;
-          const { url, height, width } = images.fixed_height;
+        const results = data.data.map((data) => {
+          const { user, title, import_datetime, images } = data;
+          const { height, width, url } = images.fixed_height;
           return {
-            title: title,
-            source: source,
+            user,
+            title,
             date: import_datetime,
-            src: url,
-            height: height,
-            width: width,
+            images,
+            height,
+            width,
+            url,
           };
         });
-        setGifs((gifs) => gifs.concat(gifResults));
+        setGifs((gifs) => gifs.concat(results));
         setLoading(false);
       })
       .catch((e) => console.log(e));

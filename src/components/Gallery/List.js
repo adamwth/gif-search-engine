@@ -6,32 +6,20 @@ const List = (props) => {
   const { gifs, forwardedRef } = props;
 
   const imageRenderer = useCallback(({ index, photo }) => {
-    const { title, source, date, forwardedRef, ...imgData } = photo;
-    const metadata = { title, source, date, url: imgData.src };
+    // NOTE: photo height and width here is different from the one from API call because
+    // Gallery modifies it before passing it into this callback
     const margin = "1px";
     if (index === gifs.length - 1) {
       return (
-        <Item
-          index={index}
-          gif={metadata}
-          ref={forwardedRef}
-          imgData={imgData}
-          margin={margin}
-        />
+        <Item index={index} image={photo} margin={margin} ref={forwardedRef} />
       );
     }
-    return (
-      <Item index={index} gif={metadata} imgData={imgData} margin={margin} />
-    );
-  });
-
-  const items = gifs.map((gif) => {
-    return { ...gif, forwardedRef };
+    return <Item index={index} image={photo} margin={margin} />;
   });
 
   return (
     <div>
-      <Gallery photos={items} renderImage={imageRenderer} />
+      <Gallery photos={gifs} renderImage={imageRenderer} />
       <div id="page-bottom-boundary" style={{ border: "1px solid red" }}></div>
     </div>
   );

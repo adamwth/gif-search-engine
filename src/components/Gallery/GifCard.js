@@ -3,57 +3,41 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import { connect } from "react-redux";
 import ShareButton from "./ShareButton";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-    paddingLeft: "1em",
-    paddingRight: "1em",
-  },
-  text: {
-    margin: "10px",
-    padding: "10px",
-    // paddingLeft: "1em",
-    // paddingRight: "1em",
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
+  root: (props) => ({
+    width: props.width,
+  }),
+  media: (props) => ({
+    height: props.height,
+    width: props.width,
+  }),
 }));
 
 const GifCard = (props) => {
-  const classes = useStyles();
-
-  const { gif, user } = props;
+  const { data, user } = props;
   const userId = user.getEmail();
   const stored = localStorage.getItem(userId);
+
+  const { title, date, images } = data;
+  const { height, width, url } = images.downsized;
+  const classes = useStyles({
+    height: parseFloat(height),
+    width: parseFloat(width),
+  });
 
   const favoriteGifsInitState = {};
   var favoriteGifs = stored ? JSON.parse(stored) : favoriteGifsInitState;
 
-  const [isFavorite, setFavorite] = useState(
-    favoriteGifs.hasOwnProperty(gif.url)
-  );
+  const [isFavorite, setFavorite] = useState(favoriteGifs.hasOwnProperty(url));
 
   const favoriteIcon = () => {
     if (isFavorite) {
@@ -73,10 +57,10 @@ const GifCard = (props) => {
   //TODO: might want to refactor this to save to redux state (which is configured to then save to local storage)
   const addFavorite = () => {
     console.log("add fav");
-    if (favoriteGifs.hasOwnProperty(gif.url)) {
+    if (favoriteGifs.hasOwnProperty(url)) {
       return;
     }
-    favoriteGifs[gif.url] = gif;
+    favoriteGifs[url] = data;
     setFavorite(true);
     saveFavorites(userId, favoriteGifs);
   };
@@ -84,7 +68,7 @@ const GifCard = (props) => {
   const removeFavorite = () => {
     console.log("remove fav");
 
-    delete favoriteGifs[gif.url];
+    delete favoriteGifs[url];
     setFavorite(false);
     saveFavorites(userId, favoriteGifs);
   };
@@ -94,31 +78,31 @@ const GifCard = (props) => {
     localStorage.setItem(userId, toStore);
   };
 
-  const { title, url, source, date } = gif;
-
+  // Gif may not have user in data returned from API
+  const gifUser = data.user;
+  let username, avatar_url, profile_url;
+  if (gifUser) {
+    username = gifUser.username;
+    avatar_url = gifUser.avatar_url;
+    profile_url = gifUser.profile_url;
+  } else {
+    username = "";
+    avatar_url = "/default_avatar.png";
+    profile_url = "";
+  }
   return (
     <Card className={classes.root}>
-      <CardHeader title={title} />
       <CardMedia className={classes.media} image={url} />
-      <CardContent>
-        <Typography
-          noWrap={false}
-          variant="h6"
-          color="textSecondary"
-          component="p"
-          className="text"
-        >
-          {source}
-        </Typography>
-        <Typography
-          variant="subtitle2"
-          color="textSecondary"
-          component="p"
-          className="text"
-        >
-          {date}
-        </Typography>
-      </CardContent>
+      <CardHeader
+        avatar={<Avatar aria-label="avatar" alt={username} src={avatar_url} />}
+        title={
+          <div>
+            <div>{title}</div>
+            <div>{username}</div>
+          </div>
+        }
+        subheader={date}
+      />
       <CardActions disableSpacing>
         {favoriteIcon()}
         <ShareButton url={url} />

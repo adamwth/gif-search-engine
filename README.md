@@ -1,6 +1,6 @@
 # Demo
 
-This app is hosted at https://gif-search-engin-1589257387520.web.app
+[Click here for demo](https://gif-search-engin-1589257387520.web.app)
 
 # Debugging
 
