@@ -19,15 +19,15 @@ class Item extends React.Component {
   };
 
   render() {
-    const { gif, imgData, forwardedRef } = this.props;
+    const { gif, imgData, forwardedRef, margin } = this.props;
+    const divStyle = {
+      height: imgData.height,
+      width: imgData.width,
+      margin: margin,
+    };
     return (
       <>
-        <div
-          className="item"
-          ref={forwardedRef}
-          width={imgData.width}
-          height={imgData.height}
-        >
+        <div ref={forwardedRef} style={divStyle}>
           <img {...imgData} onClick={this.handleOpen} />
         </div>
         <TransitionsModal
