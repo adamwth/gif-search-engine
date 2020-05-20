@@ -2,12 +2,20 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import List from "../Gallery/List";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: "5em auto",
+    width: "90%",
+  },
+}));
 
 const FavoritesPage = (props) => {
   const favoriteGifs = Object.values(props.favorites);
+  const classes = useStyles();
   return (
-    <div className="favorites-page">
-      <div className="dummy"></div>
+    <div className={classes.root}>
       <List gifs={favoriteGifs} />
     </div>
   );

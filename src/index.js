@@ -15,9 +15,15 @@ import rootReducer from "./Store/Reducers/rootReducer";
 
 // sagaMiddleware.run();
 
-const loggedInUser = localStorage.getItem("auth")
+const auth = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
   : undefined;
+
+const favorites = localStorage.getItem("favorites")
+  ? JSON.parse(localStorage.getItem("favorites"))
+  : undefined;
+
+console.log(favorites);
 
 const saveUser = () => {
   const auth = store.getState().auth;
@@ -26,7 +32,10 @@ const saveUser = () => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 };
 
-const store = createStore(rootReducer, loggedInUser);
+const store = createStore(rootReducer, {
+  auth: auth,
+  favorites: favorites,
+});
 store.subscribe(saveUser);
 
 ReactDOM.render(
