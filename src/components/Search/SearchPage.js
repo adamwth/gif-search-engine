@@ -87,6 +87,7 @@ const SearchPage = () => {
             height: parseFloat(height),
             width: parseFloat(width),
             src: url,
+            originalSrc: data.url,
           };
         });
         setGifs((gifs) => gifs.concat(results));

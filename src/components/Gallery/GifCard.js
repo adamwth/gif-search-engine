@@ -25,23 +25,19 @@ const useStyles = makeStyles((theme) => ({
   }),
 }));
 
-const vw = Math.max(
-  document.documentElement.clientWidth || 0,
-  window.innerWidth || 0
-);
-const vh = Math.max(
-  document.documentElement.clientHeight || 0,
-  window.innerHeight || 0
-);
-
 const GifCard = (props) => {
   const { data, user, favorites } = props;
   console.log(data);
 
-  const { title, date, images } = data;
-  const { height, width, url } = images.downsized;
+  const { title, date, images, originalSrc } = data;
 
-  const [isFavorite, setFavorite] = useState(favorites.hasOwnProperty(url));
+  const [isFavorite, setFavorite] = useState(
+    favorites.hasOwnProperty(originalSrc)
+  );
+
+  console.log(favorites);
+  console.log(originalSrc);
+  console.log(isFavorite);
 
   //TODO: might want to refactor this to save to redux state (which is configured to then save to local storage)
   const addFavorite = () => {
@@ -89,6 +85,8 @@ const GifCard = (props) => {
     avatar_url = "/default_avatar.png";
     profile_url = "";
   }
+
+  const { url } = images.downsized;
 
   const classes = useStyles({
     height: data.height,

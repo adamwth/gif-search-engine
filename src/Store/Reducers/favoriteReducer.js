@@ -6,7 +6,7 @@ const favoriteReducer = (state = initState, action) => {
   switch (action.type) {
     case types.ADD_FAVORITE: {
       console.log("add favorite");
-      const url = action.item.images.downsized.url;
+      const url = action.item.originalSrc;
       return {
         ...state,
         [action.user]: {
@@ -17,7 +17,7 @@ const favoriteReducer = (state = initState, action) => {
     }
     case types.REMOVE_FAVORITE: {
       console.log("remove favorite");
-      const url = action.item.images.downsized.url;
+      const url = action.item.originalSrc;
       const { [action.user]: userFavorites, ...otherUsers } = state;
       const { [url]: favoriteToRemove, ...otherFavorites } = userFavorites;
       return { ...otherUsers, [action.user]: otherFavorites };
