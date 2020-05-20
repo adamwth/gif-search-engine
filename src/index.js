@@ -21,7 +21,9 @@ const loggedInUser = localStorage.getItem("auth")
 
 const saveUser = () => {
   const auth = store.getState().auth;
+  const favorites = store.getState().favorites;
   localStorage.setItem("auth", JSON.stringify(auth));
+  localStorage.setItem("favorites", JSON.stringify(favorites));
 };
 
 const store = createStore(rootReducer, loggedInUser);

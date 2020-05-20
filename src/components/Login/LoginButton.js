@@ -10,7 +10,7 @@ class LoginButton extends React.Component {
     const onSuccess = (res) => {
       func();
       this.props.onSuccess(res);
-      this.props.login(res);
+      this.props.login(res.getBasicProfile().getEmail());
     };
 
     window.gapi.load("auth2", () => {

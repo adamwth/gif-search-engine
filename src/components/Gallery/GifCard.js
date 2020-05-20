@@ -11,9 +11,12 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { connect } from "react-redux";
 import ShareButton from "./ShareButton";
 import { Avatar } from "@material-ui/core";
+import { addFavorite, removeFavorite } from "../../Store/Actions";
 
+// Styling for gif card contents
 const useStyles = makeStyles((theme) => ({
   root: (props) => ({
+    maxWidth: "80%",
     width: props.width,
   }),
   media: (props) => ({
@@ -22,22 +25,42 @@ const useStyles = makeStyles((theme) => ({
   }),
 }));
 
+const vw = Math.max(
+  document.documentElement.clientWidth || 0,
+  window.innerWidth || 0
+);
+const vh = Math.max(
+  document.documentElement.clientHeight || 0,
+  window.innerHeight || 0
+);
+
 const GifCard = (props) => {
-  const { data, user } = props;
-  const userId = user.getEmail();
-  const stored = localStorage.getItem(userId);
+  const { data, user, favorites } = props;
+  console.log(data);
 
   const { title, date, images } = data;
   const { height, width, url } = images.downsized;
-  const classes = useStyles({
-    height: parseFloat(height),
-    width: parseFloat(width),
-  });
 
-  const favoriteGifsInitState = {};
-  var favoriteGifs = stored ? JSON.parse(stored) : favoriteGifsInitState;
+  const [isFavorite, setFavorite] = useState(favorites.hasOwnProperty(url));
 
-  const [isFavorite, setFavorite] = useState(favoriteGifs.hasOwnProperty(url));
+  //TODO: might want to refactor this to save to redux state (which is configured to then save to local storage)
+  const addFavorite = () => {
+    console.log("add fav");
+    if (isFavorite) {
+      return;
+    }
+    props.addFavorite(user, data);
+    setFavorite(true);
+  };
+
+  const removeFavorite = () => {
+    console.log("remove fav");
+    if (!isFavorite) {
+      return;
+    }
+    props.removeFavorite(user, data);
+    setFavorite(false);
+  };
 
   const favoriteIcon = () => {
     if (isFavorite) {
@@ -54,31 +77,7 @@ const GifCard = (props) => {
     );
   };
 
-  //TODO: might want to refactor this to save to redux state (which is configured to then save to local storage)
-  const addFavorite = () => {
-    console.log("add fav");
-    if (favoriteGifs.hasOwnProperty(url)) {
-      return;
-    }
-    favoriteGifs[url] = data;
-    setFavorite(true);
-    saveFavorites(userId, favoriteGifs);
-  };
-
-  const removeFavorite = () => {
-    console.log("remove fav");
-
-    delete favoriteGifs[url];
-    setFavorite(false);
-    saveFavorites(userId, favoriteGifs);
-  };
-
-  const saveFavorites = (userId, favoriteGifs) => {
-    const toStore = JSON.stringify(favoriteGifs);
-    localStorage.setItem(userId, toStore);
-  };
-
-  // Gif may not have user in data returned from API
+  // Gif may not have upload user in data returned from API
   const gifUser = data.user;
   let username, avatar_url, profile_url;
   if (gifUser) {
@@ -90,11 +89,23 @@ const GifCard = (props) => {
     avatar_url = "/default_avatar.png";
     profile_url = "";
   }
+
+  const classes = useStyles({
+    height: data.height,
+    width: data.width,
+  });
+
   return (
     <Card className={classes.root}>
-      <CardMedia className={classes.media} image={url} />
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        <CardMedia className={classes.media} image={url} />
+      </a>
       <CardHeader
-        avatar={<Avatar aria-label="avatar" alt={username} src={avatar_url} />}
+        avatar={
+          <a href={profile_url} target="_blank" rel="noopener noreferrer">
+            <Avatar aria-label="avatar" alt={username} src={avatar_url} />
+          </a>
+        }
         title={
           <div>
             <div>{title}</div>
@@ -112,7 +123,18 @@ const GifCard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return state.auth;
+  const { user } = state.auth;
+  return {
+    user: user,
+    favorites: state.favorites[user] ? state.favorites[user] : {},
+  };
 };
 
-export default connect(mapStateToProps, null)(GifCard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFavorite: (user, item) => dispatch(addFavorite(user, item)),
+    removeFavorite: (user, item) => dispatch(removeFavorite(user, item)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GifCard);

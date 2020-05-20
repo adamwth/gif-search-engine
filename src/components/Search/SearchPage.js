@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import List from "../Gallery/List";
-import { debounce, makeStyles, Divider } from "@material-ui/core";
+import { makeStyles, Divider } from "@material-ui/core";
 import useDebounce from "../../utils/useDebounce";
 
 const apiKey = process.env.REACT_APP_GIPHY_APIKEY;
@@ -33,7 +33,7 @@ const delay = 250;
 const SearchPage = () => {
   const [gifs, setGifs] = useState(gifsInit);
   const [searchTerm, setSearchTerm] = useState(searchTermInit);
-  const [limit, setLimit] = useState(limitInit);
+  const [limit, _] = useState(limitInit);
   const [batch, setBatch] = useState(batchInit);
   const [loading, setLoading] = useState(loadingInit);
 
@@ -84,9 +84,9 @@ const SearchPage = () => {
             title,
             date: import_datetime,
             images,
-            height,
-            width,
-            url,
+            height: parseFloat(height),
+            width: parseFloat(width),
+            src: url,
           };
         });
         setGifs((gifs) => gifs.concat(results));

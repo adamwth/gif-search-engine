@@ -20,22 +20,22 @@ class Item extends React.Component {
 
   render() {
     const { image, forwardedRef, margin } = this.props;
-    const { height, width, url, ...metadata } = image;
+    const { height, width, src, title } = image;
     const divStyle = {
       height: height,
       width: width,
       margin: margin,
     };
-    const imgData = { height, width, src: url };
+    const imgData = { height, width, src };
     return (
       <>
         <div ref={forwardedRef} style={divStyle}>
-          <img {...imgData} onClick={this.handleOpen} />
+          <img {...imgData} alt={title} onClick={this.handleOpen} />
         </div>
         <TransitionsModal
           open={this.state.open}
           handleClose={this.handleClose}
-          data={metadata}
+          data={image}
         />
       </>
     );

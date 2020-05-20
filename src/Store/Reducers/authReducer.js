@@ -12,7 +12,7 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         isSignedIn: true,
-        user: action.user.getBasicProfile(),
+        user: action.user,
       };
     }
     case types.LOGOUT: {

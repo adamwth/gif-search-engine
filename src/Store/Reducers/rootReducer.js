@@ -1,10 +1,10 @@
 import authReducer from "./authReducer";
-import searchReducer from "./searchReducer";
+import favoriteReducer from "./favoriteReducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  search: searchReducer,
+  favorites: favoriteReducer,
 });
 
 export default rootReducer;
