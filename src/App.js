@@ -82,6 +82,7 @@ const App = (props) => {
           open={alertFlag}
           autoHideDuration={6000}
           onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
           <AlertMessage alertType={alertType} handleClose={handleClose} />
         </Snackbar>
