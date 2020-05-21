@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     margin: theme.spacing(2),
+    marginBottom: theme.spacing(10),
   },
 }));
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
  */
 const gifsInit = [];
 const searchTermInit = "";
-const limitInit = 10;
+const limitInit = 50;
 const batchInit = 0;
 const loadingInit = false;
 const delay = 250;
@@ -78,7 +79,7 @@ const SearchPage = () => {
         console.log(data);
         const results = data.data.map((data) => {
           const { user, title, import_datetime, images } = data;
-          const { height, width, url } = images.fixed_height;
+          const { height, width, url } = images.fixed_width;
           return {
             user,
             title,
@@ -117,9 +118,10 @@ const SearchPage = () => {
   const observer = useRef();
   const lastElementRefCallback = useCallback(
     (node) => {
+      console.log("callback ref");
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-
+      console.log("fetching more");
       observer.current = new IntersectionObserver(
         (entries) => {
           // If the last displayed item is not visible, return
@@ -131,7 +133,7 @@ const SearchPage = () => {
           fetchMoreResults();
           // observer.current.unobserve(element);
         },
-        { threshold: 1.0 }
+        { threshold: 0.1 }
       );
 
       if (node) observer.current.observe(node);
