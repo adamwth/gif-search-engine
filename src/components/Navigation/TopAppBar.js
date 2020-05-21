@@ -22,8 +22,13 @@ function HideOnScroll(props) {
 
 const useStyles = makeStyles((theme) => ({
   title: {
+    fontStyle: "italic",
+    fontWeight: 700,
+  },
+  text: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
   },
   auth: {
     display: "flex",
@@ -59,11 +64,19 @@ const TopAppBar = (props) => {
               container
               spacing={0}
             >
-              <Grid item xs={2}></Grid>
+              <Grid item xs={2} className={classes.text}>
+                <Typography variant="subtitle2" color="inherit">
+                  Powered by GIPHY
+                </Typography>
+              </Grid>
 
-              <Grid item xs={8} className={classes.title}>
-                <Typography type="title" color="inherit">
-                  GIFS!
+              <Grid item xs={8} className={classes.text}>
+                <Typography
+                  type="title"
+                  color="inherit"
+                  className={classes.title}
+                >
+                  G I F S !
                 </Typography>
               </Grid>
               {authComponent}

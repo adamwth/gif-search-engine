@@ -6,9 +6,15 @@ import FavoritesPage from "./components/Favorites/FavoritesPage";
 import BottomNavBar from "./components/Navigation/BottomNavBar";
 import { connect } from "react-redux";
 import TopAppBar from "./components/Navigation/TopAppBar";
-import { Snackbar } from "@material-ui/core";
+import { Snackbar, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import AlertMessage from "./components/Alert/AlertMessage";
 import alertTypes from "./components/Alert/AlertTypes";
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: "Helvetica Neue",
+  },
+});
 
 const App = (props) => {
   const [alertFlag, setAlertFlag] = useState(false);
@@ -41,13 +47,14 @@ const App = (props) => {
 
   return (
     <>
-      <TopAppBar
-        handleLoginSuccess={handleLoginSuccess}
-        handleLoginFailure={handleLoginFailure}
-        handleLogout={handleLogout}
-      />
-      <Switch>
-        {/* <Route
+      <ThemeProvider theme={theme}>
+        <TopAppBar
+          handleLoginSuccess={handleLoginSuccess}
+          handleLoginFailure={handleLoginFailure}
+          handleLogout={handleLogout}
+        />
+        <Switch>
+          {/* <Route
           path="/"
           exact
           render={(props) => (
@@ -58,23 +65,28 @@ const App = (props) => {
             />
           )}
         /> */}
-        <Route
-          exact
-          path="/"
-          component={SearchPage}
-          isAuthenticated={props.isSignedIn}
-        />
-        <ProtectedRoute
-          exact
-          path="/favorites"
-          component={FavoritesPage}
-          isAuthenticated={props.isSignedIn}
-        />
-      </Switch>
-      <Snackbar open={alertFlag} autoHideDuration={6000} onClose={handleClose}>
-        <AlertMessage alertType={alertType} handleClose={handleClose} />
-      </Snackbar>
-      <BottomNavBar />
+          <Route
+            exact
+            path="/"
+            component={SearchPage}
+            isAuthenticated={props.isSignedIn}
+          />
+          <ProtectedRoute
+            exact
+            path="/favorites"
+            component={FavoritesPage}
+            isAuthenticated={props.isSignedIn}
+          />
+        </Switch>
+        <Snackbar
+          open={alertFlag}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <AlertMessage alertType={alertType} handleClose={handleClose} />
+        </Snackbar>
+        <BottomNavBar />
+      </ThemeProvider>
     </>
   );
 };
