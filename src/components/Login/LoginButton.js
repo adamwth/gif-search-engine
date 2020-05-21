@@ -10,25 +10,12 @@ const GOOGLE_BUTTON_ID = "google-login";
  */
 class LoginButton extends React.Component {
   componentDidMount() {
-    console.log("mount login");
-    // Set interval because window.gapi sometimes doesn't load before component mounts
-    const googleLoadTimer = setInterval(() => {
-      if (window.gapi) {
-        this.initGoogle(() => {
-          clearInterval(googleLoadTimer);
-        });
-      }
-    }, 90);
-  }
-
-  initGoogle = (func) => {
     window.gapi.load("auth2", () => {
       window.gapi.auth2
         .init({
           client_id: `${process.env.REACT_APP_GOOGLE_CLIENTID}`,
         })
         .then(() => {
-          func();
           window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
             scope: "profile email",
             longtitle: false,
@@ -38,7 +25,9 @@ class LoginButton extends React.Component {
           });
         });
     });
-  };
+  }
+
+  initGoogle = (func) => {};
 
   onSuccess = (res) => {
     const { login, handleLoginSuccess } = this.props;
@@ -53,9 +42,7 @@ class LoginButton extends React.Component {
   };
 
   render() {
-    // return <Button>fuck you</Button>;
     return <div id={GOOGLE_BUTTON_ID} />;
-    // return <div class="g-signin2" data-onsuccess="onSignIn"></div>;
   }
 }
 
