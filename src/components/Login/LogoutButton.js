@@ -9,73 +9,53 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../Store/Actions/index";
 
-function HideOnScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window });
+// function HideOnScroll(props) {
+//   const { children } = props;
+//   const trigger = useScrollTrigger();
 
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
+//   return (
+//     <Slide appear={false} direction="down" in={!trigger}>
+//       {children}
+//     </Slide>
+//   );
+// }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    border: 0,
-    borderRadius: 3,
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    color: "white",
-    height: 48,
-    padding: "0 30px",
-    position: "absolute",
-    top: theme.spacing(2),
-    right: theme.spacing(2),
-  },
+  root: {},
 }));
 
 // TODO: Prevent auto-authorization of previous user - may need to revoke previous user token?
 const LogoutButton = (props) => {
   const classes = useStyles();
 
-  // Return null if page is at login
-  const { pathname } = props.location;
-  if (pathname === "/") {
-    return null;
-  }
-
   const onClick = () => {
     window.gapi.load("auth2", () => {
       console.log("loaded gapi");
-      var auth2 = window.gapi.auth2.getAuthInstance();
-      auth2.signOut().then(() => {
-        console.log("after signout from gapi");
-        auth2.disconnect();
-        props.onClick();
-        props.logout();
-        props.history.push("/");
+      const auth2 = window.gapi.auth2.init({
+        client_id: `${process.env.REACT_APP_GOOGLE_CLIENTID}`,
+      });
+      auth2.then(() => {
+        console.log("auth2 fully initialized");
+        auth2.signOut().then(() => {
+          console.log("after signout from gapi");
+          auth2.disconnect();
+          props.logout();
+          props.handleLogout();
+          props.history.push("/");
+        });
       });
     });
   };
 
   return (
-    <>
-      <CssBaseline />
-      <HideOnScroll {...props}>
-        <Button
-          className={classes.root}
-          variant="contained"
-          color="secondary"
-          onClick={onClick}
-        >
-          Logout
-        </Button>
-      </HideOnScroll>
-    </>
+    <Button
+      className={classes.root}
+      size="small"
+      color="primary"
+      onClick={onClick}
+    >
+      Logout
+    </Button>
   );
 };
 
