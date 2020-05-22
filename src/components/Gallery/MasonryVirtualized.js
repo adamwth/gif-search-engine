@@ -152,8 +152,6 @@ class MasonryVirtualized extends React.PureComponent {
   }
 
   imageRenderer = (list, index, height, width) => {
-    // NOTE: photo height and width here is different from the one from API call because
-    // Gallery modifies it before passing it into this callback
     const margin = "1px";
     const photo = list[index];
     const photoScaled = { ...photo, height: height, width: width };
@@ -175,6 +173,12 @@ class MasonryVirtualized extends React.PureComponent {
 
   _cellRenderer({ index, key, parent, style }) {
     const list = this.props.images;
+
+    // Sometimes the index can be more than the list length, return nothing in that case
+    // Might be a problem with the cell measurer cache
+    if (index >= list.length) {
+      return;
+    }
 
     const datum = list[index];
     // const width = this.state.columnWidth;

@@ -9,22 +9,10 @@ import alertTypes from "../Alert/AlertTypes";
 import { connect } from "react-redux";
 import { logout } from "../../Store/Actions/index";
 
-// function HideOnScroll(props) {
-//   const { children } = props;
-//   const trigger = useScrollTrigger();
-
-//   return (
-//     <Slide appear={false} direction="down" in={!trigger}>
-//       {children}
-//     </Slide>
-//   );
-// }
-
 const useStyles = makeStyles((theme) => ({
   root: {},
 }));
 
-// TODO: Prevent auto-authorization of previous user - may need to revoke previous user token?
 const LogoutButton = (props) => {
   const classes = useStyles();
 
@@ -35,7 +23,6 @@ const LogoutButton = (props) => {
       });
       auth2.then(() => {
         auth2.signOut().then(() => {
-          console.log("signed out!");
           auth2.disconnect();
           logout();
         });

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * Constants used for search
+ * Init states used for search
  */
 const gifsInit = [];
 const searchTermInit = "";
@@ -76,7 +76,6 @@ const SearchPage = () => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const results = data.data.map((data) => {
           const { user, title, import_datetime, images } = data;
           const { height, width, url } = images.fixed_width;
@@ -120,7 +119,6 @@ const SearchPage = () => {
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-      console.log("fetching more");
       observer.current = new IntersectionObserver(
         (entries) => {
           // If the last displayed item is not visible, return

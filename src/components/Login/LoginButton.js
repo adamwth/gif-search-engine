@@ -19,6 +19,7 @@ class LoginButton extends React.Component {
         .then(() => {
           window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
             scope: "profile email",
+            prompt: "consent",
             longtitle: false,
             theme: "light",
             onsuccess: this.onSuccess,

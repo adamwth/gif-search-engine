@@ -44,7 +44,6 @@ const GifCard = (props) => {
   );
 
   const checkSignedIn = () => {
-    console.log(isSignedIn);
     if (!isSignedIn) {
       alert(alertTypes.LOGIN_PROMPT);
       return false;
@@ -57,8 +56,7 @@ const GifCard = (props) => {
     if (!canAddFavorite || isFavorite) {
       return;
     }
-    console.log("add fav");
-    addFavorite(user, data);
+    addFavorite(user.email, data);
     setFavorite(true);
   };
 
@@ -67,8 +65,7 @@ const GifCard = (props) => {
     if (!canAddFavorite || !isFavorite) {
       return;
     }
-    console.log("remove fav");
-    removeFavorite(user, data);
+    removeFavorite(user.email, data);
     setFavorite(false);
   };
 
@@ -139,7 +136,7 @@ const mapStateToProps = (state) => {
   return {
     user: user,
     isSignedIn: isSignedIn,
-    favorites: state.favorites[user] ? state.favorites[user] : {},
+    favorites: state.favorites[user.email] ? state.favorites[user.email] : {},
   };
 };
 

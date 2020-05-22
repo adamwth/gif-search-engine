@@ -25,7 +25,6 @@ const AlertSystem = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return state.alert;
 };
 

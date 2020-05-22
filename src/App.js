@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import SearchPage from "./components/Search/SearchPage";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -6,9 +6,7 @@ import FavoritesPage from "./components/Favorites/FavoritesPage";
 import BottomNavBar from "./components/Navigation/BottomNavBar";
 import { connect } from "react-redux";
 import TopAppBar from "./components/Navigation/TopAppBar";
-import { Snackbar, createMuiTheme, ThemeProvider } from "@material-ui/core";
-import AlertMessage from "./components/Alert/AlertMessage";
-import alertTypes from "./components/Alert/AlertTypes";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import AlertSystem from "./components/Alert/AlertSystem";
 
 const theme = createMuiTheme({
