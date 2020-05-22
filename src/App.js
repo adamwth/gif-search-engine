@@ -9,6 +9,7 @@ import TopAppBar from "./components/Navigation/TopAppBar";
 import { Snackbar, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import AlertMessage from "./components/Alert/AlertMessage";
 import alertTypes from "./components/Alert/AlertTypes";
+import AlertSystem from "./components/Alert/AlertSystem";
 
 const theme = createMuiTheme({
   typography: {
@@ -17,37 +18,10 @@ const theme = createMuiTheme({
 });
 
 const App = (props) => {
-  const [alertFlag, setAlertFlag] = useState(false);
-  const [alertType, setAlertType] = useState(alertTypes.NONE);
-
-  const handleLoginSuccess = (googleUser) => {
-    setAlertType(alertTypes.LOGIN_SUCCESS);
-    setAlertFlag(true);
-  };
-
-  const handleLoginFailure = () => {
-    setAlertType(alertTypes.LOGIN_FAILURE);
-    setAlertFlag(true);
-  };
-
-  const handleLogout = () => {
-    setAlertType(alertTypes.LOGOUT);
-    setAlertFlag(true);
-  };
-
-  const handleClose = () => {
-    setAlertType(alertTypes.NONE);
-    setAlertFlag(false);
-  };
-
   return (
     <>
       <ThemeProvider theme={theme}>
-        <TopAppBar
-          handleLoginSuccess={handleLoginSuccess}
-          handleLoginFailure={handleLoginFailure}
-          handleLogout={handleLogout}
-        />
+        <TopAppBar />
         <Switch>
           <Route
             exact
@@ -62,14 +36,7 @@ const App = (props) => {
             isAuthenticated={props.isSignedIn}
           />
         </Switch>
-        <Snackbar
-          open={alertFlag}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        >
-          <AlertMessage alertType={alertType} handleClose={handleClose} />
-        </Snackbar>
+        <AlertSystem />
         <BottomNavBar />
       </ThemeProvider>
     </>

@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Slide from "@material-ui/core/Slide";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router-dom";
+
+import { alert } from "../../Store/Actions";
+import alertTypes from "../Alert/AlertTypes";
 
 import { connect } from "react-redux";
 import { logout } from "../../Store/Actions/index";
@@ -30,21 +30,24 @@ const LogoutButton = (props) => {
 
   const onClick = () => {
     window.gapi.load("auth2", () => {
-      console.log("loaded gapi");
       const auth2 = window.gapi.auth2.init({
         client_id: `${process.env.REACT_APP_GOOGLE_CLIENTID}`,
       });
       auth2.then(() => {
-        console.log("auth2 fully initialized");
         auth2.signOut().then(() => {
-          console.log("after signout from gapi");
+          console.log("signed out!");
           auth2.disconnect();
-          props.logout();
-          props.handleLogout();
-          props.history.push("/");
+          logout();
         });
       });
     });
+  };
+
+  const logout = () => {
+    const { logout, alert } = props;
+    logout();
+    alert(alertTypes.LOGOUT);
+    props.history.push("/");
   };
 
   return (
@@ -62,6 +65,7 @@ const LogoutButton = (props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
+    alert: (alertType) => dispatch(alert(alertType)),
   };
 };
 

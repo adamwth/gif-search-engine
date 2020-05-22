@@ -18,6 +18,14 @@ const BottomNavBar = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  // Sets the bottom navigation based on current route location
+  const pathname = props.location.pathname;
+  if (pathname === "/" && value !== 0) {
+    setValue(0);
+  } else if (pathname === "/favorites" && value !== 1) {
+    setValue(1);
+  }
+
   return (
     <BottomNavigation
       value={value}

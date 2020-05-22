@@ -35,3 +35,13 @@ export const removeFavorite = (user, item) => {
     item: item,
   };
 };
+
+/**
+ * Alert message creator
+ */
+export const alert = (alertType) => {
+  return {
+    type: types.ALERT,
+    alertType: alertType,
+  };
+};

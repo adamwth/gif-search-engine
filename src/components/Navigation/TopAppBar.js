@@ -39,14 +39,14 @@ const useStyles = makeStyles((theme) => ({
 
 const TopAppBar = (props) => {
   const classes = useStyles();
-  const { isSignedIn, user, handleLogout, ...loginHandlers } = props;
+  const { isSignedIn, user } = props;
   const authComponent = isSignedIn ? (
     <>
       <Avatar aria-label="avatar" src={user.avatar} />
-      <LogoutButton handleLogout={handleLogout} />
+      <LogoutButton />
     </>
   ) : (
-    <LoginButton {...loginHandlers} />
+    <LoginButton />
   );
 
   return (
