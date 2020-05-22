@@ -14,8 +14,10 @@ import {
 } from "react-virtualized";
 import Item from "./Item";
 
+const columnWidth = (window.innerWidth * 0.9) / 3.5;
+
 const initState = {
-  columnWidth: (window.innerWidth * 0.9) / 3,
+  columnWidth: columnWidth,
   height: 1000,
   gutterSize: 2,
   overscanByPixels: 0,
@@ -32,7 +34,7 @@ class MasonryVirtualized extends React.PureComponent {
 
     this._cache = new CellMeasurerCache({
       defaultHeight: 250,
-      defaultWidth: (window.innerWidth * 0.9) / 3,
+      defaultWidth: columnWidth,
       fixedWidth: true,
     });
 

@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   auth: {
     display: "flex",
     justifyContent: "flex-end",
+    alignItems: "center",
   },
 }));
 
@@ -41,12 +42,8 @@ const TopAppBar = (props) => {
   const { isSignedIn, user, handleLogout, ...loginHandlers } = props;
   const authComponent = isSignedIn ? (
     <>
-      <Grid item xs={1} className={classes.auth}>
-        <Avatar aria-label="avatar" src={user.avatar} />
-      </Grid>
-      <Grid item xs={1} className={classes.auth}>
-        <LogoutButton handleLogout={handleLogout} />
-      </Grid>
+      <Avatar aria-label="avatar" src={user.avatar} />
+      <LogoutButton handleLogout={handleLogout} />
     </>
   ) : (
     <LoginButton {...loginHandlers} />
@@ -78,7 +75,10 @@ const TopAppBar = (props) => {
                   G I F S !
                 </Typography>
               </Grid>
-              {authComponent}
+
+              <Grid item xs={2} className={classes.auth}>
+                {authComponent}
+              </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
