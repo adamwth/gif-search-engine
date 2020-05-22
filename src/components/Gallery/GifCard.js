@@ -27,17 +27,12 @@ const useStyles = makeStyles((theme) => ({
 
 const GifCard = (props) => {
   const { data, user, favorites } = props;
-  console.log(data);
 
   const { title, date, images, originalSrc } = data;
 
   const [isFavorite, setFavorite] = useState(
     favorites.hasOwnProperty(originalSrc)
   );
-
-  console.log(favorites);
-  console.log(originalSrc);
-  console.log(isFavorite);
 
   //TODO: might want to refactor this to save to redux state (which is configured to then save to local storage)
   const addFavorite = () => {

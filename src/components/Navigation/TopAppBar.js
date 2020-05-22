@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 const TopAppBar = (props) => {
   const classes = useStyles();
   const { isSignedIn, user, handleLogout, ...loginHandlers } = props;
-  console.log(user.avatar);
   const authComponent = isSignedIn ? (
     <>
       <Grid item xs={1} className={classes.auth}>
@@ -57,7 +56,7 @@ const TopAppBar = (props) => {
     <>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar position="sticky" color="white">
+        <AppBar position="sticky" color="inherit">
           <Toolbar>
             <Grid
               justify="space-between" // Add it here :)

@@ -84,8 +84,6 @@ class MasonryVirtualized extends React.PureComponent {
   };
 
   render() {
-    console.log("RERENDER WHOLE");
-    console.log(this.props);
     // If no images provided by props, return empty div
     // Hacky fix; without this, sometimes Masonry still runs cellRenderer on empty list,
     // which somehow prevents subsequent renders. Should probably open an issue on react-virtualized.
@@ -109,7 +107,6 @@ class MasonryVirtualized extends React.PureComponent {
   }
 
   _renderAutoSizer({ height, scrollTop }) {
-    console.log("RERENDER AUTOSIZER");
     this._height = height;
     this._scrollTop = scrollTop;
 

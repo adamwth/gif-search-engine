@@ -23,8 +23,6 @@ const favorites = localStorage.getItem("favorites")
   ? JSON.parse(localStorage.getItem("favorites"))
   : undefined;
 
-console.log(favorites);
-
 const saveUser = () => {
   const auth = store.getState().auth;
   const favorites = store.getState().favorites;

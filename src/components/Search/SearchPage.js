@@ -118,7 +118,6 @@ const SearchPage = () => {
   const observer = useRef();
   const lastElementRefCallback = useCallback(
     (node) => {
-      console.log("callback ref");
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       console.log("fetching more");

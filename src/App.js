@@ -21,21 +21,16 @@ const App = (props) => {
   const [alertType, setAlertType] = useState(alertTypes.NONE);
 
   const handleLoginSuccess = (googleUser) => {
-    console.log("run handle login success");
     setAlertType(alertTypes.LOGIN_SUCCESS);
     setAlertFlag(true);
   };
 
   const handleLoginFailure = () => {
-    console.log("run handle login failure");
-
     setAlertType(alertTypes.LOGIN_FAILURE);
     setAlertFlag(true);
   };
 
   const handleLogout = () => {
-    console.log("run handle logout");
-
     setAlertType(alertTypes.LOGOUT);
     setAlertFlag(true);
   };
@@ -54,17 +49,6 @@ const App = (props) => {
           handleLogout={handleLogout}
         />
         <Switch>
-          {/* <Route
-          path="/"
-          exact
-          render={(props) => (
-            <LoginPage
-              onSuccess={handleLoginSuccess}
-              onFailure={handleLoginFailure}
-              {...props}
-            />
-          )}
-        /> */}
           <Route
             exact
             path="/"
