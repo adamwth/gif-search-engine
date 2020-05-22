@@ -8,6 +8,7 @@ const initState = {
 const alertReducer = (state = initState, action) => {
   switch (action.type) {
     case types.ALERT: {
+      console.log(action.alertType);
       return {
         ...state,
         alertType: action.alertType,

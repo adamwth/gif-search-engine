@@ -11,7 +11,8 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { connect } from "react-redux";
 import ShareButton from "./ShareButton";
 import { Avatar } from "@material-ui/core";
-import { addFavorite, removeFavorite } from "../../Store/Actions";
+import { addFavorite, removeFavorite, alert } from "../../Store/Actions";
+import alertTypes from "../Alert/AlertTypes";
 
 // Styling for gif card contents
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +27,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GifCard = (props) => {
-  const { data, user, favorites } = props;
+  const {
+    data,
+    user,
+    isSignedIn,
+    favorites,
+    addFavorite,
+    removeFavorite,
+    alert,
+  } = props;
 
   const { title, date, images, originalSrc } = data;
 
@@ -34,35 +43,45 @@ const GifCard = (props) => {
     favorites.hasOwnProperty(originalSrc)
   );
 
-  //TODO: might want to refactor this to save to redux state (which is configured to then save to local storage)
-  const addFavorite = () => {
-    console.log("add fav");
-    if (isFavorite) {
+  const checkSignedIn = () => {
+    console.log(isSignedIn);
+    if (!isSignedIn) {
+      alert(alertTypes.LOGIN_PROMPT);
+      return false;
+    }
+    return true;
+  };
+
+  const handleAddFavorite = () => {
+    const canAddFavorite = checkSignedIn();
+    if (!canAddFavorite || isFavorite) {
       return;
     }
-    props.addFavorite(user, data);
+    console.log("add fav");
+    addFavorite(user, data);
     setFavorite(true);
   };
 
-  const removeFavorite = () => {
-    console.log("remove fav");
-    if (!isFavorite) {
+  const handleRemoveFavorite = () => {
+    const canAddFavorite = checkSignedIn();
+    if (!canAddFavorite || !isFavorite) {
       return;
     }
-    props.removeFavorite(user, data);
+    console.log("remove fav");
+    removeFavorite(user, data);
     setFavorite(false);
   };
 
   const favoriteIcon = () => {
     if (isFavorite) {
       return (
-        <IconButton aria-label="favorited" onClick={removeFavorite}>
+        <IconButton aria-label="favorited" onClick={handleRemoveFavorite}>
           <FavoriteIcon />
         </IconButton>
       );
     }
     return (
-      <IconButton aria-label="add to favorites" onClick={addFavorite}>
+      <IconButton aria-label="add to favorites" onClick={handleAddFavorite}>
         <FavoriteBorderIcon />
       </IconButton>
     );
@@ -116,9 +135,10 @@ const GifCard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { user } = state.auth;
+  const { user, isSignedIn } = state.auth;
   return {
     user: user,
+    isSignedIn: isSignedIn,
     favorites: state.favorites[user] ? state.favorites[user] : {},
   };
 };
@@ -127,6 +147,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addFavorite: (user, item) => dispatch(addFavorite(user, item)),
     removeFavorite: (user, item) => dispatch(removeFavorite(user, item)),
+    alert: (alertType) => dispatch(alert(alertType)),
   };
 };
 

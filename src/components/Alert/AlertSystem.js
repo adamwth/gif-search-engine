@@ -16,7 +16,7 @@ const AlertSystem = (props) => {
     <Snackbar
       open={alertType !== types.None}
       autoHideDuration={6000}
-      onClose={handleClose}
+      // onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
       <AlertMessage alertType={alertType} handleClose={handleClose} />
@@ -25,6 +25,7 @@ const AlertSystem = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return state.alert;
 };
 

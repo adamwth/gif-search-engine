@@ -23,6 +23,12 @@ const AlertMessage = (props) => {
           Logout success!
         </Alert>
       );
+    case types.LOGIN_PROMPT:
+      return (
+        <Alert onClose={handleClose} severity="error">
+          You need to be signed in to carry out this action.
+        </Alert>
+      );
     default:
       return <div></div>;
   }
