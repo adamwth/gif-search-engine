@@ -5,38 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./Store/Reducers/rootReducer";
-// import createSagaMiddleware from "redux-saga";
-
-// const sagaMiddleware = createSagaMiddleware();
-
-// const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
-
-// sagaMiddleware.run();
-
-const auth = localStorage.getItem("auth")
-  ? JSON.parse(localStorage.getItem("auth"))
-  : undefined;
-
-const favorites = localStorage.getItem("favorites")
-  ? JSON.parse(localStorage.getItem("favorites"))
-  : undefined;
-
-console.log(favorites);
-
-const saveUser = () => {
-  const auth = store.getState().auth;
-  const favorites = store.getState().favorites;
-  localStorage.setItem("auth", JSON.stringify(auth));
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-};
-
-const store = createStore(rootReducer, {
-  auth: auth,
-  favorites: favorites,
-});
-store.subscribe(saveUser);
+import store from "./Store/store";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -15,7 +15,6 @@ const useDebounce = (value, delay) => {
       // ... useEffect is re-called. useEffect will only be re-called ...
       // ... if value changes (see the inputs array below).
       return () => {
-        console.log("clean up");
         clearTimeout(handler);
       };
     },

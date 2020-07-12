@@ -33,31 +33,27 @@ const useStyles = makeStyles((theme) => ({
   auth: {
     display: "flex",
     justifyContent: "flex-end",
+    alignItems: "center",
   },
 }));
 
 const TopAppBar = (props) => {
   const classes = useStyles();
-  const { isSignedIn, user, handleLogout, ...loginHandlers } = props;
-  console.log(user.avatar);
+  const { isSignedIn, user } = props;
   const authComponent = isSignedIn ? (
     <>
-      <Grid item xs={1} className={classes.auth}>
-        <Avatar aria-label="avatar" src={user.avatar} />
-      </Grid>
-      <Grid item xs={1} className={classes.auth}>
-        <LogoutButton handleLogout={handleLogout} />
-      </Grid>
+      <Avatar aria-label="avatar" src={user.avatar} />
+      <LogoutButton />
     </>
   ) : (
-    <LoginButton {...loginHandlers} />
+    <LoginButton />
   );
 
   return (
     <>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar position="sticky" color="white">
+        <AppBar position="sticky" color="inherit">
           <Toolbar>
             <Grid
               justify="space-between" // Add it here :)
@@ -79,7 +75,10 @@ const TopAppBar = (props) => {
                   G I F S !
                 </Typography>
               </Grid>
-              {authComponent}
+
+              <Grid item xs={2} className={classes.auth}>
+                {authComponent}
+              </Grid>
             </Grid>
           </Toolbar>
         </AppBar>

@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login } from "../../Store/Actions";
+import { login, alert } from "../../Store/Actions";
 import { withRouter } from "react-router-dom";
+import alertTypes from "../Alert/AlertTypes";
 
 const GOOGLE_BUTTON_ID = "google-login";
 
@@ -18,6 +19,7 @@ class LoginButton extends React.Component {
         .then(() => {
           window.gapi.signin2.render(GOOGLE_BUTTON_ID, {
             scope: "profile email",
+            prompt: "consent",
             longtitle: false,
             theme: "light",
             onsuccess: this.onSuccess,
@@ -30,7 +32,7 @@ class LoginButton extends React.Component {
   initGoogle = (func) => {};
 
   onSuccess = (res) => {
-    const { login, handleLoginSuccess } = this.props;
+    const { login, alert } = this.props;
     const profile = res.getBasicProfile();
     const user = {
       email: profile.getEmail(),
@@ -38,7 +40,7 @@ class LoginButton extends React.Component {
       avatar: profile.getImageUrl(),
     };
     login(user);
-    handleLoginSuccess();
+    alert(alertTypes.LOGIN_SUCCESS);
   };
 
   render() {
@@ -49,6 +51,7 @@ class LoginButton extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (loginUser) => dispatch(login(loginUser)),
+    alert: (alertType) => dispatch(alert(alertType)),
   };
 };
 

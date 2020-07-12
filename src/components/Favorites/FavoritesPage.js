@@ -24,7 +24,7 @@ const FavoritesPage = (props) => {
 const mapStateToProps = (state) => {
   const { user } = state.auth;
   return {
-    favorites: state.favorites[user] ? state.favorites[user] : {},
+    favorites: state.favorites[user.email] ? state.favorites[user.email] : {},
   };
 };
 
